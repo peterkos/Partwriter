@@ -50,25 +50,38 @@ def checkParallels():
 	intervals[bass] = bass.notes.melodicIntervals()
 
 	# Actually compare
-	for i in range(0, len(intervals[soprano]) - 1):
+	
 
-		# print(intervals[soprano].name, intervals[alto].name, intervals[tenor].name, intervals[bass].name)
+	def compareVoice(v1, v2):
 
-		def compareVoice(v1, v2):
-			if (intervals[v1][i].name == intervals[v1][i].name and intervals[v1][i + 1].name == intervals[v1][i + 1].name):
-				print("Parallel " + intervals[v1][i].niceName + "s" + " between " + str(v1[0]) + " and " + str(v2[1]))
+		for i in range(0, len(intervals[soprano]) - 1):
 
-		compareVoice(bass, tenor)
-		compareVoice(bass, alto)
-		compareVoice(bass, soprano)
-		compareVoice(tenor, alto)
-		compareVoice(tenor, soprano)
-		compareVoice(alto, soprano)
+			# print("Sop at " + str(i) + ": " + str(intervals[soprano][i].noteStart))
+			# print("Alt at " + str(i) + ": " + str(intervals[alto][i].noteStart))
+
+			intervalBetween = interval.Interval(intervals[v1][i].noteStart, intervals[v2][i].noteStart)
+
+			if ((intervals[v1][i].simpleName == intervals[v2][i].simpleName) and \
+				(intervalBetween.simpleName == "P5" or intervalBetween == "P8")):
+				
+				# TODO: Cleanup, and add measure location! Goal: color notes!
+				print("Parallel " + intervalBetween.simpleName + \
+					  " between " + str(v1[0].bestName()) + " and " + str(v2[0].bestName()) + \
+					  " across beats " + str(i + 1) + " and " + str(i + 2))
+
+	compareVoice(bass, tenor)
+	compareVoice(bass, alto)
+	compareVoice(bass, soprano)
+	compareVoice(tenor, alto)
+	compareVoice(tenor, soprano)
+	compareVoice(alto, soprano)
 
 
-printIntervals()
 print()
+printIntervals()
+print("\n")
 checkParallels()
+print("\n")
 
 # soprano.show()
 # aScore.show()
