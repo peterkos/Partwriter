@@ -1,0 +1,54 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "e8e278753d2d1b22f08927170b8e472eac8d2b306e4e494ec71124922627e59b"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "abjad": {
+            "hashes": [
+                "sha256:bdb1fda835658cfbf1b84cd557e50827b78fef37c04dc4d703a7536c31c699d2"
+            ],
+            "version": "==2.21"
+        },
+        "mido": {
+            "hashes": [
+                "sha256:35142874d4521dc5fcebcdc3a645df87cb0ecad129dd031cbca391e2d052313f",
+                "sha256:64b9d1595da8f319bff2eb866f9181257d3670a7803f7e38415f22c03a577560"
+            ],
+            "version": "==1.2.8"
+        },
+        "music21": {
+            "hashes": [
+                "sha256:616a4f1145d323392e1f7543d423ac06cafdaea9ff0028eeb729453f9c952c42"
+            ],
+            "version": "==4.1.0"
+        },
+        "ply": {
+            "hashes": [
+                "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3",
+                "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"
+            ],
+            "version": "==3.11"
+        },
+        "six": {
+            "hashes": [
+                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+            ],
+            "version": "==1.11.0"
+        }
+    },
+    "develop": {}
+}
