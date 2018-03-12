@@ -9,7 +9,7 @@
     <creator type="composer">Music21</creator>
     <encoding>
       <software>MuseScore 2.1.0</software>
-      <encoding-date>2018-03-09</encoding-date>
+      <encoding-date>2018-03-11</encoding-date>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="yes" value="yes"/>
@@ -101,12 +101,12 @@
     <part-group type="stop" number="1"/>
     </part-list>
   <part id="P1">
-    <measure number="1" width="259.48">
+    <measure number="1" width="252.90">
       <print>
         <system-layout>
           <system-margins>
-            <left-margin>95.16</left-margin>
-            <right-margin>543.22</right-margin>
+            <left-margin>82.00</left-margin>
+            <right-margin>569.53</right-margin>
             </system-margins>
           <top-system-distance>170.00</top-system-distance>
           </system-layout>
@@ -134,17 +134,7 @@
           </direction-type>
         <sound tempo="80"/>
         </direction>
-      <note default-x="77.35" default-y="-20.00">
-        <pitch>
-          <step>B</step>
-          <octave>4</octave>
-          </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <stem>up</stem>
-        </note>
-      <note default-x="167.43" default-y="-15.00">
+      <note default-x="77.35" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -154,8 +144,18 @@
         <type>half</type>
         <stem>up</stem>
         </note>
+      <note default-x="164.15" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>half</type>
+        <stem>up</stem>
+        </note>
       </measure>
-    <measure number="2" width="212.76">
+    <measure number="2" width="206.19">
       <note default-x="18.42" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -168,7 +168,7 @@
         <accidental>sharp</accidental>
         <stem>up</stem>
         </note>
-      <note default-x="110.11" default-y="-25.00">
+      <note default-x="106.82" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -184,7 +184,7 @@
       </measure>
     </part>
   <part id="P2">
-    <measure number="1" width="259.48">
+    <measure number="1" width="252.90">
       <print>
         <staff-layout number="1">
           <staff-distance>65.00</staff-distance>
@@ -214,9 +214,9 @@
         <type>half</type>
         <stem>up</stem>
         </note>
-      <note default-x="167.43" default-y="-140.00">
+      <note default-x="164.15" default-y="-145.00">
         <pitch>
-          <step>F</step>
+          <step>E</step>
           <octave>4</octave>
           </pitch>
         <duration>2</duration>
@@ -225,10 +225,10 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="2" width="212.76">
-      <note default-x="18.42" default-y="-145.00">
+    <measure number="2" width="206.19">
+      <note default-x="18.42" default-y="-150.00">
         <pitch>
-          <step>E</step>
+          <step>D</step>
           <octave>4</octave>
           </pitch>
         <duration>2</duration>
@@ -236,9 +236,9 @@
         <type>half</type>
         <stem>up</stem>
         </note>
-      <note default-x="110.11" default-y="-145.00">
+      <note default-x="106.82" default-y="-155.00">
         <pitch>
-          <step>E</step>
+          <step>C</step>
           <octave>4</octave>
           </pitch>
         <duration>2</duration>
@@ -252,7 +252,7 @@
       </measure>
     </part>
   <part id="P3">
-    <measure number="1" width="259.48">
+    <measure number="1" width="252.90">
       <print>
         <staff-layout number="1">
           <staff-distance>65.00</staff-distance>
@@ -283,7 +283,7 @@
         <type>half</type>
         <stem>down</stem>
         </note>
-      <note default-x="167.43" default-y="-225.00">
+      <note default-x="164.15" default-y="-225.00">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -294,7 +294,7 @@
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="2" width="212.76">
+    <measure number="2" width="206.19">
       <note default-x="18.42" default-y="-230.00">
         <pitch>
           <step>B</step>
@@ -305,7 +305,7 @@
         <type>half</type>
         <stem>down</stem>
         </note>
-      <note default-x="110.11" default-y="-225.00">
+      <note default-x="106.82" default-y="-225.00">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -321,7 +321,7 @@
       </measure>
     </part>
   <part id="P4">
-    <measure number="1" width="259.48">
+    <measure number="1" width="252.90">
       <print>
         <staff-layout number="1">
           <staff-distance>65.00</staff-distance>
@@ -351,9 +351,9 @@
         <type>half</type>
         <stem>up</stem>
         </note>
-      <note default-x="167.43" default-y="-325.00">
+      <note default-x="164.15" default-y="-330.00">
         <pitch>
-          <step>F</step>
+          <step>E</step>
           <octave>3</octave>
           </pitch>
         <duration>2</duration>
@@ -362,7 +362,7 @@
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="2" width="212.76">
+    <measure number="2" width="206.19">
       <note default-x="18.42" default-y="-330.00">
         <pitch>
           <step>E</step>
@@ -373,7 +373,7 @@
         <type>half</type>
         <stem>down</stem>
         </note>
-      <note default-x="110.11" default-y="-350.00">
+      <note default-x="106.82" default-y="-350.00">
         <pitch>
           <step>A</step>
           <octave>2</octave>

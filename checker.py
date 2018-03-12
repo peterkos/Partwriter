@@ -82,11 +82,80 @@ def checkParallels():
 	compareVoice(alto, soprano)
 
 
+def voiceResolution():
+	chords = aScore.chordify()
+
+	# chordIndex allows us to index the current node in a given voice, so
+	# we can compare the ith+1 note and check resolutions.
+	chordIndex = 0
+
+	# Loop through all chords
+	for chord in chords.recurse().getElementsByClass("Chord"):
+		
+		print(chord)
+		chord.closedPosition(forceOctave=4, inPlace=True)
+		print(chord)
+
+		rn = roman.romanNumeralFromChord(chord, aScore.analyze("key"), True)
+		chord.addLyric(str(rn.figure))
+
+		# Check chordal seventh resolution
+		if (chord.isDominantSeventh()):
+				
+			# Find which voice has the seventh
+			voiceWithSeventh = -1
+			voices = [bass, alto, tenor, soprano]
+
+			for voice in voices:
+				print(str(voice.notes[chordIndex].name) + " against " + str(chord.seventh.name))
+				if (voice.notes[chordIndex].name == chord.seventh.name):
+					voiceWithSeventh = voice
+					print("found in " + voice[0].bestName())
+
+			# Check for errors
+			if (voiceWithSeventh == -1):
+				raise ValueError("Could not find a voice containin the seventh in chord #" + str(i) + ".")
+
+			# Check if it's not resolved correctly.
+			# Chordal sevenths must resovle up by step.
+			resInterval = interval.Interval(voiceWithSeventh.notes[chordIndex], voiceWithSeventh.notes[chordIndex + 1])
+			if ((not resInterval.isStep) or (resInterval.direction != interval.Direction.ASCENDING)):
+				
+				print("\tImproperly resolved at beat " + str(chordIndex + 1))
+
+				# Change color
+				resInterval.noteStart.style.color = "blue"
+			else:
+				
+				print("\tChord properly resolved in " + voiceWithSeventh[0].bestName() + " at beat " + str(chordIndex))
+
+
+
+		# TODO: Check scale degree 7 resolution
+		
+		# if (chord contains scale degree 7)
+		# 	Same algorithm as above :
+		# 		Find voice that has the note and reference the note after
+
+
+		chordIndex += 1
+
+
+	# Insert into main score
+	aScore.insert(0, chords)
+	aScore.show()
+
+
+
+
 print()
-printIntervals()
+# printIntervals()
 print("\n")
-checkParallels()
+# checkParallels()
 print("\n")
 
 
-aScore.show()
+
+# aScore.show()
+voiceResolution()
+
