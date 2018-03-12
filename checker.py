@@ -19,6 +19,8 @@ alto     = aScore.parts[1].flat
 tenor    = aScore.parts[2].flat
 bass     = aScore.parts[3].flat
 
+
+
 def printIntervals():
 	print("Soprano:  ", end="")
 	for interval in soprano.notes.melodicIntervals():
@@ -42,33 +44,36 @@ def printIntervals():
 
 def checkParallels(): 
 
-	# Streams for intervals
-	intervals = {}
-	intervals[soprano] = soprano.notes.melodicIntervals()
-	intervals[alto] = alto.notes.melodicIntervals()
-	intervals[tenor] = tenor.notes.melodicIntervals()
-	intervals[bass] = bass.notes.melodicIntervals()
+	# Colors to distinguish simultaenous parallels
+	# TODO: Garuntee different colors? Different colors for P5 and P8?
+	import itertools
+	colors = ["blue", "green", "red", "cyan", "magenta"]
+	colorGen = itertools.cycle(colors)
 
-	# Actually compare
-	
-
+	# Function to compare
 	def compareVoice(v1, v2):
 
-		for i in range(0, len(intervals[soprano]) - 1):
+		for i in range(len(v1.notes) - 1):
 
-			# print("Sop at " + str(i) + ": " + str(intervals[soprano][i].noteStart))
-			# print("Alt at " + str(i) + ": " + str(intervals[alto][i].noteStart))
+			firstInterval = interval.Interval(v1.notes[i], v2.notes[i])
+			secondInterval = interval.Interval(v1.notes[i + 1], v2.notes[i + 1])
 
-			intervalBetween = interval.Interval(intervals[v1][i].noteStart, intervals[v2][i].noteStart)
-
-			if ((intervals[v1][i].simpleName == intervals[v2][i].simpleName) and \
-				(intervalBetween.simpleName == "P5" or intervalBetween == "P8")):
+			if (firstInterval.simpleName == secondInterval.simpleName and \
+				firstInterval.simpleName == "P5" or firstInterval.simpleName == "P8"):
 				
-				# TODO: Cleanup, and add measure location! Goal: color notes!
-				print("Parallel " + intervalBetween.simpleName + \
+				print("Parallel " + firstInterval.simpleName + \
 					  " between " + str(v1[0].bestName()) + " and " + str(v2[0].bestName()) + \
 					  " across beats " + str(i + 1) + " and " + str(i + 2))
 
+				# Change color of affected notes
+				currentColor = next(colorGen)
+				v1.notes[i].style.color     = currentColor
+				v1.notes[i + 1].style.color = currentColor
+				v2.notes[i].style.color     = currentColor
+				v2.notes[i + 1].style.color = currentColor
+
+
+	# Compare each voice respectively, bottom-up 
 	compareVoice(bass, tenor)
 	compareVoice(bass, alto)
 	compareVoice(bass, soprano)
@@ -83,6 +88,5 @@ print("\n")
 checkParallels()
 print("\n")
 
-# soprano.show()
-# aScore.show()
 
+aScore.show()
