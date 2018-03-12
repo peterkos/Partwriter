@@ -1,6 +1,12 @@
 
 from music21 import *
 
+# NOTE: 
+#	Will be condensed into a class eventually. 
+# 	I just don't want to type "self. self. self. self." before every part!
+
+
+
 # class ScoreParse:
 
 # 	def __init__(self, name):
@@ -12,7 +18,7 @@ from music21 import *
 # 		self.bass    = self.score.parts[3]
 
 
-aScore = converter.parse("asdf.xml")
+aScore = converter.parse("testscore.xml")
 
 soprano  = aScore.parts[0].flat
 alto     = aScore.parts[1].flat
@@ -84,6 +90,7 @@ def checkParallels():
 
 def voiceResolution():
 	chords = aScore.chordify()
+	scoreKey = aScore.analyze("key")
 
 	# chordIndex allows us to index the current node in a given voice, so
 	# we can compare the ith+1 note and check resolutions.
@@ -96,46 +103,47 @@ def voiceResolution():
 		chord.closedPosition(forceOctave=4, inPlace=True)
 		print(chord)
 
-		rn = roman.romanNumeralFromChord(chord, aScore.analyze("key"), True)
-		chord.addLyric(str(rn.figure))
+		romanNumeral = roman.romanNumeralFromChord(chord, scoreKey, True)
+		chord.addLyric(str(romanNumeral.figure))
 
-		# Check chordal seventh resolution
+		# Check chordal seventh resolution -- 
 		if (chord.isDominantSeventh()):
 				
 			# Find which voice has the seventh
-			voiceWithSeventh = -1
-			voices = [bass, alto, tenor, soprano]
-
-			for voice in voices:
-				print(str(voice.notes[chordIndex].name) + " against " + str(chord.seventh.name))
-				if (voice.notes[chordIndex].name == chord.seventh.name):
-					voiceWithSeventh = voice
-					print("found in " + voice[0].bestName())
-
-			# Check for errors
-			if (voiceWithSeventh == -1):
-				raise ValueError("Could not find a voice containin the seventh in chord #" + str(i) + ".")
+			voiceWithChordalSeventh = findVoice(7, chord, chordIndex)
 
 			# Check if it's not resolved correctly.
 			# Chordal sevenths must resovle up by step.
-			resInterval = interval.Interval(voiceWithSeventh.notes[chordIndex], voiceWithSeventh.notes[chordIndex + 1])
+			resInterval = interval.Interval(voiceWithChordalSeventh.notes[chordIndex], voiceWithChordalSeventh.notes[chordIndex + 1])
+			
 			if ((not resInterval.isStep) or (resInterval.direction != interval.Direction.ASCENDING)):
 				
-				print("\tImproperly resolved at beat " + str(chordIndex + 1))
-
 				# Change color
 				resInterval.noteStart.style.color = "blue"
+				print("\tImproperly resolved at beat " + str(chordIndex + 1))
 			else:
-				
-				print("\tChord properly resolved in " + voiceWithSeventh[0].bestName() + " at beat " + str(chordIndex))
+				print("\tChord properly resolved in " + voiceWithChordalSeventh[0].bestName() + " at beat " + str(chordIndex))
 
 
 
-		# TODO: Check scale degree 7 resolution
+		# Check scale degree 7 resolution -- 
+		# Precondition: Dominant (V) chord only!
+
+		voiceWithSeventh = findVoice(3, chord, chordIndex)
+		scaleSeventh = scoreKey.pitches[7 - 1].name
+
+		if (scaleSeventh.accidental is None):
+			raise ValueError("Scale Degree 7th is not raised at beat" + str(chordIndex))
+
 		
-		# if (chord contains scale degree 7)
-		# 	Same algorithm as above :
-		# 		Find voice that has the note and reference the note after
+		# TODO: Fix findVoice method to be relative to scale, not relative to chord!
+
+	
+		# If in inner voice, can leap down to scale degree 5
+		# if (voiceWithSeventh == alto or voiceWithSeventh == tenor):
+
+		
+		
 
 
 		chordIndex += 1
@@ -143,19 +151,38 @@ def voiceResolution():
 
 	# Insert into main score
 	aScore.insert(0, chords)
-	aScore.show()
+	# aScore.show()
+
+
+# Returns the voice that contains the given degree
+def findVoice(degreeNumber, chord, index):
+	voiceWithDegree = -1
+	voices = [bass, alto, tenor, soprano]
+
+	for voice in voices:
+		if (voice.notes[index].name == chord.getChordStep(degreeNumber).name):
+			voiceWithDegree = voice
+			print("found in " + voice[0].bestName())
+
+	# TODO: Add chord/measure number
+	if (voiceWithDegree == -1):
+		raise ValueError("Could not find a voice containin the seventh!")
+
+	return voiceWithDegree
+
 
 
 
 
 print()
-# printIntervals()
+printIntervals()
 print("\n")
-# checkParallels()
+checkParallels()
 print("\n")
 
 
 
-# aScore.show()
 voiceResolution()
+aScore.show()
+
 
