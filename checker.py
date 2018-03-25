@@ -96,44 +96,53 @@ def voiceResolution():
 	# we can compare the ith+1 note and check resolutions.
 	chordIndex = 0
 
+	# Helper function: returns the first voice that contains the given pitch
+	def findVoice(pitch, chord, index):
+		voices = [bass, alto, tenor, soprano]
+
+		for voice in voices:
+			if (voice.notes[index].name == pitch.name):
+				print("\tfound " + pitch.name + " in " + voice[0].bestName())
+				return voice
+
+		if (voiceWithDegree == -1):
+			raise ValueError("Could not find a voice containing the pitch " + pitch.name + "!")
+
+		return -1
+
+
 	# Loop through all chords
 	for chord in chords.recurse().getElementsByClass("Chord"):
 		
-		print(chord)
 		chord.closedPosition(forceOctave=4, inPlace=True)
-		print(chord)
 
 		romanNumeral = roman.romanNumeralFromChord(chord, scoreKey, True)
 		chord.addLyric(str(romanNumeral.figure))
 
 		# Check chordal seventh resolution -- 
 		if (chord.isDominantSeventh()):
-				
-			# Find which voice has the seventh
-			voiceWithChordalSeventh = findVoice(7, chord, chordIndex)
+			
+			voiceWithChordalSeventh = findVoice(chord.seventh, chord, chordIndex)
 
 			# Check if it's not resolved correctly.
 			# Chordal sevenths must resovle up by step.
 			resInterval = interval.Interval(voiceWithChordalSeventh.notes[chordIndex], voiceWithChordalSeventh.notes[chordIndex + 1])
 			
 			if ((not resInterval.isStep) or (resInterval.direction != interval.Direction.ASCENDING)):
-				
-				# Change color
 				resInterval.noteStart.style.color = "blue"
-				print("\tImproperly resolved at beat " + str(chordIndex + 1))
+				print("\tChordal seventh improperly resolved at beat " + str(chordIndex + 1))
 			else:
-				print("\tChord properly resolved in " + voiceWithChordalSeventh[0].bestName() + " at beat " + str(chordIndex))
-
+				resInterval.noteStart.style.color = "green"
+				print("\tChordal seventh properly resolved in " + voiceWithChordalSeventh[0].bestName() + " at beat " + str(chordIndex + 1))
 
 
 		# Check scale degree 7 resolution -- 
 		# Precondition: Dominant (V) chord only!
 
-		voiceWithSeventh = findVoice(3, chord, chordIndex)
-		scaleSeventh = scoreKey.pitches[7 - 1].name
-
-		if (scaleSeventh.accidental is None):
-			raise ValueError("Scale Degree 7th is not raised at beat" + str(chordIndex))
+		# voiceWithSeventh = findVoice(3, chord, chordIndex)
+		# scaleSeventh = scoreKey.pitchFromDegree(7)
+		# if (scaleSeventh.accidental is None):
+			# raise ValueError("Scale Degree 7 is not raised at beat " + str(chordIndex))
 
 		
 		# TODO: Fix findVoice method to be relative to scale, not relative to chord!
@@ -151,24 +160,7 @@ def voiceResolution():
 
 	# Insert into main score
 	aScore.insert(0, chords)
-	# aScore.show()
 
-
-# Returns the voice that contains the given degree
-def findVoice(degreeNumber, chord, index):
-	voiceWithDegree = -1
-	voices = [bass, alto, tenor, soprano]
-
-	for voice in voices:
-		if (voice.notes[index].name == chord.getChordStep(degreeNumber).name):
-			voiceWithDegree = voice
-			print("found in " + voice[0].bestName())
-
-	# TODO: Add chord/measure number
-	if (voiceWithDegree == -1):
-		raise ValueError("Could not find a voice containin the seventh!")
-
-	return voiceWithDegree
 
 
 
