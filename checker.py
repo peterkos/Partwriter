@@ -100,15 +100,14 @@ def voiceResolution():
 	def findVoice(pitch, chord, index):
 		voices = [bass, alto, tenor, soprano]
 
+
 		for voice in voices:
+			print(voice.notes[index].name)
 			if (voice.notes[index].name == pitch.name):
 				print("\tfound " + pitch.name + " in " + voice[0].bestName())
 				return voice
 
-		if (voiceWithDegree == -1):
-			raise ValueError("Could not find a voice containing the pitch " + pitch.name + "!")
-
-		return -1
+		raise ValueError("Could not find a voice containing the pitch " + pitch.name + "!")
 
 
 	# Loop through all chords
@@ -122,47 +121,46 @@ def voiceResolution():
 		# Check chordal seventh resolution -- 
 		if (chord.isDominantSeventh()):
 			
-			voiceWithChordalSeventh = findVoice(chord.seventh, chord, chordIndex)
+			voiceChordal7th = findVoice(chord.seventh, chord, chordIndex)
 
 			# Check if it's not resolved correctly.
 			# Chordal sevenths must resovle up by step.
-			resInterval = interval.Interval(voiceWithChordalSeventh.notes[chordIndex], voiceWithChordalSeventh.notes[chordIndex + 1])
+			resInterval = interval.Interval(voiceChordal7th.notes[chordIndex], voiceChordal7th.notes[chordIndex + 1])
 			
 			if ((not resInterval.isStep) or (resInterval.direction != interval.Direction.ASCENDING)):
 				resInterval.noteStart.style.color = "blue"
 				print("\tChordal seventh improperly resolved at beat " + str(chordIndex + 1))
-			else:
-				resInterval.noteStart.style.color = "green"
-				print("\tChordal seventh properly resolved in " + voiceWithChordalSeventh[0].bestName() + " at beat " + str(chordIndex + 1))
+			# else:
+				# resInterval.noteStart.style.color = "green"
+				# print("\tChordal seventh properly resolved in " + voiceChordal7th[0].bestName() + " at beat " + str(chordIndex + 1))
 
 
 		# Check scale degree 7 resolution -- 
-		# Precondition: Dominant (V) chord only!
+		# TODO: Check if not raised in chord! (absolute value of note?)
+		scaleSeventh = scoreKey.getLeadingTone()
+		scaleSeventhInChord = [currentNote for currentNote in chord.pitches if scaleSeventh.name == currentNote.name]
 
-		# voiceWithSeventh = findVoice(3, chord, chordIndex)
-		# scaleSeventh = scoreKey.pitchFromDegree(7)
-		# if (scaleSeventh.accidental is None):
-			# raise ValueError("Scale Degree 7 is not raised at beat " + str(chordIndex))
+		if (len(scaleSeventhInChord) == 1):
 
-		
-		# TODO: Fix findVoice method to be relative to scale, not relative to chord!
+			voiceWithSeventh = findVoice(scaleSeventh, chord, chordIndex)
+			resInterval = interval.Interval(voiceWithSeventh.notes[chordIndex], voiceWithSeventh.notes[chordIndex + 1])
 
-	
-		# If in inner voice, can leap down to scale degree 5
-		# if (voiceWithSeventh == alto or voiceWithSeventh == tenor):
+			# If in inner voice, can leap down to scale degree 5
+			if (voiceWithSeventh[0].bestName() == "Alto" or voiceWithSeventh[0].bestName() == "Tenor"):
+				if (not (not resInterval.isStep and (voiceWithSeventh.notes[chordIndex + 1].name == scoreKey.pitchFromDegree(5).name))):
+					resInterval.noteStart.style.color = "red"
+					print("\tLeading tone improperly resolved in " + voiceChordal7th[0].bestName() + " at beat " + str(chordIndex + 1))
 
-		
-		
-
+			# Normal resolution -- needs to resolve up by step
+			if (not (resInterval.isStep and voiceWithSeventh.notes[chordIndex + 1].name == scoreKey.pitchFromDegree(1).name)):
+				resInterval.noteStart.style.color = "red"
+				print("\tLeading tone improperly resolved in " + voiceChordal7th[0].bestName() + " at beat " + str(chordIndex + 1))
 
 		chordIndex += 1
 
 
 	# Insert into main score
 	aScore.insert(0, chords)
-
-
-
 
 
 
@@ -175,6 +173,6 @@ print("\n")
 
 
 voiceResolution()
-aScore.show()
+# aScore.show()
 
 
