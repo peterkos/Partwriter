@@ -115,9 +115,6 @@ def voiceResolution():
 		
 		chord.closedPosition(forceOctave=4, inPlace=True)
 
-		romanNumeral = roman.romanNumeralFromChord(chord, scoreKey, True)
-		chord.addLyric(str(romanNumeral.figure))
-
 		# Check chordal seventh resolution -- 
 		if (chord.isDominantSeventh()):
 			
@@ -159,20 +156,61 @@ def voiceResolution():
 		chordIndex += 1
 
 
-	# Insert into main score
+# TODO: Which notes to color?
+def chordMembers():
+
+	chords = aScore.chordify()
+	scoreKey = aScore.analyze("key")
+
+	# chordIndex allows us to index the current node in a given voice, so
+	# we can compare the ith+1 note and check resolutions.
+	chordIndex = 0
+
+	# Loop through all chords
+	for chord in chords.recurse().getElementsByClass("Chord"):
+		
+		chord.closedPosition(forceOctave=4, inPlace=True)
+
+		# Check for missing notes in chord
+		if (chord.root is None):
+			print("Missing root at beat " + str(chordIndex + 1))
+
+		if (chord.third is None):
+			print("Missing third at beat " + str(chordIndex + 1))
+
+		# Check for doubled leading tone
+		scaleSeventh = scoreKey.getLeadingTone()
+		scaleSeventhInChord = [currentNote for currentNote in chord.pitches if scaleSeventh.name == currentNote.name]
+
+		if (scaleSeventhInChord == 2):
+			print("Doubled leading tone at beat " + str(chordIndex + 1))
+
+		chordIndex += 1
+
+
+def addChordsToScore():
+	chords = aScore.chordify()
+	
+	# Loop through all chords
+	for chord in chords.recurse().getElementsByClass("Chord"):
+		romanNumeral = roman.romanNumeralFromChord(chord, scoreKey, True)
+		chord.addLyric(str(romanNumeral.figure))
+
 	aScore.insert(0, chords)
 
 
+# print()
+# printIntervals()
+# print("\n")
+# checkParallels()
+# print("\n")
+# voiceResolution()
+# print("\n")
+# chordMembers()
 
-print()
-printIntervals()
-print("\n")
-checkParallels()
-print("\n")
 
 
 
-voiceResolution()
 # aScore.show()
 
 
