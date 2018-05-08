@@ -1,0 +1,52 @@
+missing module named 'multiprocessing.forking' - imported by music21.ext.joblib._multiprocessing_helpers, /Users/peter.kos/.local/share/virtualenvs/Music_test-7kP4J00b/lib/python3.6/site-packages/PyInstaller/loader/rthooks/pyi_rth_multiprocessing.py
+missing module named multiprocessing.get_context - imported by multiprocessing, multiprocessing.pool, multiprocessing.managers, multiprocessing.sharedctypes
+missing module named multiprocessing.TimeoutError - imported by multiprocessing, multiprocessing.pool
+missing module named multiprocessing.BufferTooShort - imported by multiprocessing, multiprocessing.connection
+missing module named multiprocessing.AuthenticationError - imported by multiprocessing, multiprocessing.connection
+missing module named multiprocessing.set_start_method - imported by multiprocessing, multiprocessing.spawn
+missing module named multiprocessing.get_start_method - imported by multiprocessing, multiprocessing.spawn
+missing module named nt - imported by os, ntpath, shutil, pathlib, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named org - imported by pickle, /Users/peter.kos/Code/Python/Music test/checker.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named _winreg - imported by platform, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named java - imported by platform, unittest.mock, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named 'java.lang' - imported by platform, xml.sax._exceptions, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named vms_lib - imported by platform, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named winreg - imported by platform, mimetypes, urllib.request, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named 'org.python' - imported by copy, xml.sax, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named msvcrt - imported by subprocess, getpass, multiprocessing.spawn, multiprocessing.popen_spawn_win32, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named _winapi - imported by subprocess, multiprocessing.reduction, multiprocessing.connection, multiprocessing.heap, multiprocessing.popen_spawn_win32, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named _dummy_threading - imported by dummy_threading, /Users/peter.kos/Code/Python/Music test/checker.py
+missing module named music21.ext.mock - imported by music21.ext, music21.converter.subConverters
+missing module named Queue - imported by music21.ext.jsonpickle.compat
+missing module named sets - imported by music21.ext.jsonpickle.compat
+missing module named netbios - imported by uuid
+missing module named win32wnet - imported by uuid
+missing module named __builtin__ - imported by music21.ext.jsonpickle.util
+missing module named music21.ext.enum - imported by music21.ext, music21.interval
+missing module named exceptions - imported by music21.ext.joblib.my_exceptions
+missing module named 'numpy.lib' - imported by music21.ext.joblib.pool
+missing module named numpy - imported by music21.ext.joblib.hashing, music21.ext.joblib.logger, music21.ext.joblib.numpy_pickle, music21.ext.joblib.pool
+missing module named cPickle - imported by music21.ext.joblib.memory, music21.ext.joblib.parallel, music21.ext.joblib.pool
+missing module named cStringIO - imported by cPickle
+missing module named copy_reg - imported by cPickle, cStringIO
+missing module named music21.common.EqualSlottedObjectMixin - imported by music21.common, music21.beam
+missing module named music21.common.opFrac - imported by music21.common, music21.duration, music21.meter, music21.figuredBass.checker, music21.stream.filters, music21.stream.makeNotation, music21.stream, music21.braille.segment, music21.base
+missing module named music21.common.SlottedObjectMixin - imported by music21.common, music21.pitch, music21.duration, music21.derivation, music21.tie, music21.volume, music21.meter, music21.stream.streamStatus
+missing module named mock - imported by music21.converter.subConverters
+missing module named pygame - imported by music21.midi.realtime
+missing module named ImageOps - imported by music21.lily.translate
+missing module named Image - imported by music21.lily.translate
+missing module named PIL - imported by music21.lily.translate
+missing module named 'IPython.core' - imported by music21.ipython21
+missing module named matplotlib - imported by music21.graph.utilities, music21.ipython21.ipExtension
+missing module named IPython - imported by music21.converter.subConverters
+missing module named StringMatcher - imported by music21.search.segment
+missing module named 'music21.ext.six.moves' - imported by music21.ext.more_itertools.more, music21.ext.more_itertools.recipes
+missing module named StringIO - imported by music21.ext.six
+missing module named networkx - imported by music21.scale.intervalNetwork, music21.graph.utilities
+missing module named 'matplotlib.pyplot' - imported by music21.graph.utilities
+missing module named mpl_toolkits - imported by music21.graph.utilities
+missing module named orngTree - imported by music21.features.base
+missing module named orange - imported by music21.features.base

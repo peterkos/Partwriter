@@ -9,7 +9,7 @@
     <creator type="composer">Music21</creator>
     <encoding>
       <software>MuseScore 2.1.0</software>
-      <encoding-date>2018-03-11</encoding-date>
+      <encoding-date>2018-04-01</encoding-date>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="yes" value="yes"/>
@@ -283,10 +283,10 @@
         <type>half</type>
         <stem>down</stem>
         </note>
-      <note default-x="164.15" default-y="-225.00">
+      <note default-x="164.15" default-y="-235.00">
         <pitch>
-          <step>C</step>
-          <octave>4</octave>
+          <step>A</step>
+          <octave>3</octave>
           </pitch>
         <duration>2</duration>
         <voice>1</voice>

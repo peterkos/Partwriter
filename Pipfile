@@ -7,9 +7,12 @@ name = "pypi"
 
 [packages]
 
-abjad = "*"
-mido = "*"
 "music21" = "*"
+pyinstaller = "*"
+numpy = "*"
+matplotlib = "*"
+scipy = "*"
+pylint = "*"
 
 
 [dev-packages]

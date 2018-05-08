@@ -1,11 +1,11 @@
 
+from sys import argv
 from music21 import *
-
 
 
 """
 	This class provides basic analysis methods relating to partwriting practices.
-	
+
 	It currently outputs any errors to the console, and colors the specific notes that are wrong,
 	according to the following:
 		Blue: Parallels
@@ -31,21 +31,21 @@ class ScoreParse:
 
 		print()
 		print("Alto:     ", end="")
-		for interval in self.alto.notes.melodicIntervals(): 
+		for interval in self.alto.notes.melodicIntervals():
 			print(interval.name, end=" ")
 
 		print()
 		print("Tenor:    ", end="")
-		for interval in self.tenor.notes.melodicIntervals(): 
+		for interval in self.tenor.notes.melodicIntervals():
 			print(interval.name, end=" ")
 
 		print()
 		print("Bass:     ", end="")
-		for interval in self.bass.notes.melodicIntervals(): 
+		for interval in self.bass.notes.melodicIntervals():
 			print(interval.name, end=" ")
 
 
-	def checkParallels(self): 
+	def checkParallels(self):
 
 		# Function to find parallels between two given voices
 		def compareVoice(v1, v2):
@@ -57,7 +57,7 @@ class ScoreParse:
 
 				if (firstInterval.simpleName == secondInterval.simpleName and \
 					firstInterval.simpleName == "P5" or firstInterval.simpleName == "P8"):
-					
+
 					print("Parallel " + firstInterval.simpleName + \
 						  " between " + str(v1[0].bestName()) + " and " + str(v2[0].bestName()) + \
 						  " across beats " + str(i + 1) + " and " + str(i + 2))
@@ -69,7 +69,7 @@ class ScoreParse:
 					v2.notes[i + 1].style.color = "blue"
 
 
-		# Compare each voice respectively, bottom-up 
+		# Compare each voice respectively, bottom-up
 		compareVoice(self.bass,  self.tenor)
 		compareVoice(self.bass,  self.alto)
 		compareVoice(self.bass,  self.soprano)
@@ -101,24 +101,24 @@ class ScoreParse:
 
 		# Loop through all chords
 		for chord in self.chords.recurse().getElementsByClass("Chord"):
-			
+
 			chord.closedPosition(forceOctave=4, inPlace=True)
 
-			# Check chordal seventh resolution -- 
+			# Check chordal seventh resolution --
 			if (chord.isDominantSeventh()):
-				
+
 				voiceChordal7th = findVoice(chord.seventh, chord, chordIndex)
 
 				# Check if it's not resolved correctly.
 				# Chordal sevenths must resovle up by step.
 				resInterval = interval.Interval(voiceChordal7th.notes[chordIndex], voiceChordal7th.notes[chordIndex + 1])
-				
+
 				if (not (resInterval.isStep or (resInterval.direction == interval.Direction.ASCENDING))):
 					resInterval.noteStart.style.color = "red"
 					print("\tChordal seventh improperly resolved at beat " + str(chordIndex + 1))
 
 
-			# Check scale degree 7 resolution -- 
+			# Check scale degree 7 resolution --
 			# TODO: Check if not raised in chord! (absolute value of note?)
 			scaleSeventh = self.scoreKey.getLeadingTone()
 			scaleSeventhInChord = [currentNote for currentNote in chord.pitches if scaleSeventh.name == currentNote.name]
@@ -151,7 +151,7 @@ class ScoreParse:
 
 		# Loop through all chords
 		for chord in self.chords.recurse().getElementsByClass("Chord"):
-			
+
 			chord.closedPosition(forceOctave=4, inPlace=True)
 
 			# Check for missing notes in chord
@@ -182,15 +182,26 @@ class ScoreParse:
 		self.localScore.insert(0, self.chords)
 
 
-sParse = ScoreParse("testscore.xml")
-print()
+def getInput():
+	try:
+		return argv[1]
+	except:
+		print("Missing parameter scoreName.")
+		print("usage: ")
+		print("\t$ p3 checker.py [score name]\twhere [score name] is a part-split .xml file.")
+		print("\t")
+		print("Quitting...")
+		exit()
+
+sParse = ScoreParse(getInput() + ".xml")
+print("[Printing Intervals]")
 sParse.printIntervals()
-print("\n")
+print("\n[Checking Parallels]")
 sParse.checkParallels()
-print("\n")
+print("\n[Checking Voice Resolution]")
 sParse.voiceResolution()
-print("\n")
+print("\n[Checking for Missing Chord Members]")
 sParse.chordMembers()
 sParse.reduceOnScore()
 
-
+sParse.localScore.show()
